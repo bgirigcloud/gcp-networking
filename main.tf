@@ -41,7 +41,7 @@ terraform {
  * Reference - https://github.com/terraform-google-modules/terraform-google-network
  *
  */
-module "vpc" {
+module "network" {
     source  = "terraform-google-modules/network/google"
     version = "~> 6.0"
 
@@ -117,10 +117,10 @@ module "vpc" {
  * Reference - https://github.com/terraform-google-modules/terraform-google-cloud-nat
  *
  */
-module "cloud-nat" {
+/* module "cloud-nat" {
   source     = "terraform-google-modules/cloud-nat/google"
   version    = "~> 1.2"
   project_id = var.project_id
   region     = var.region
   router     = google_compute_router.router.name
-}
+} */
