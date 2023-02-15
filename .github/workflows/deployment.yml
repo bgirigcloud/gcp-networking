@@ -22,7 +22,7 @@ jobs:
         run: terraform init -backend-config="bucket=$TF_STATE_BUCKET_NAME" -backend-config="prefix=k8s"
       - name: Terraform Plan
         run: |
-          terraform plan 
+          terraform plan -destroy -lock=false \
           -out=PLAN 
       - name: Terraform apply
         run: terraform apply PLAN
