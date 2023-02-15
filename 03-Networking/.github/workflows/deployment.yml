@@ -1,0 +1,28 @@
+name: Deploy to GCP
+on:
+  push:
+    branches:
+    - '*'
+env:
+  GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  TF_STATE_BUCKET_NAME: ${{ secrets.GCP_TF_STATE_BUCKET }}
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: 'actions/checkout@v3'
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+      - uses: 'google-github-actions/setup-gcloud@v1'
+      - uses: hashicorp/setup-terraform@v2
+      - name: Terraform init
+        run: terraform init -backend-config="bucket=$TF_STATE_BUCKET_NAME" -backend-config="prefix=k8s"
+      - name: Terraform Plan
+        run: |
+          terraform plan 
+          -out=PLAN 
+      - name: Terraform apply
+        run: terraform apply PLAN
