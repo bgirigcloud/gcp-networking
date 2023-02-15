@@ -22,10 +22,10 @@ output "subnets" {
   value = module.network.subnets_names
 }
 
-output "cloud_nat" {
+/* output "cloud_nat" {
   value = module.cloud_nat.name
-}
+} */
 
-output "cloud_nat_router" {
+/* output "cloud_nat_router" {
   value = module.cloud_nat.router_name
-}
+} */
